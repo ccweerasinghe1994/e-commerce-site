@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import './SignIn.styles.scss';
 import Input from "../form-input/FormInput.component";
 import CustomButton from "../custom-button/CustomButton.component";
-import {signInWithGoogle} from "../../firebase/FireBase.util";
+import {signInWithGoogle, auth} from "../../firebase/FireBase.util";
 
 class SignIn extends Component {
 
@@ -14,12 +14,21 @@ class SignIn extends Component {
         }
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
-        this.setState({
-            password: "",
-            email: ""
-        })
+
+        const {email, password} = this.state;
+        try {
+            await auth.signInWithEmailAndPassword(email, password)
+            this.setState({
+                password: "",
+                email: ""
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+
     }
     handleChange = (event) => {
         const {value, name} = event.target;
@@ -31,12 +40,14 @@ class SignIn extends Component {
     render() {
         return (
             <div className='sign-in'>
-                <h2 className='title' >i all ready have an account</h2>
+                <h2 className='title'>i all ready have an account</h2>
                 <span>i already have an account</span>
                 <form onSubmit={this.handleSubmit}>
-                    <Input label='Email' handleChange={this.handleChange} type="email" value={this.state.email} required name='email'/>
+                    <Input label='Email' handleChange={this.handleChange} type="email" value={this.state.email} required
+                           name='email'/>
 
-                    <Input label='Password' handleChange={this.handleChange}  type="password" value={this.state.password} required name='password'/>
+                    <Input label='Password' handleChange={this.handleChange} type="password" value={this.state.password}
+                           required name='password'/>
 
 
                     <div className="buttons">
