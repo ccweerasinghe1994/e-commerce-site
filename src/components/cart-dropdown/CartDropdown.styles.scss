@@ -1,4 +1,4 @@
-.cart-dropdown{
+.cart-dropdown {
   position: absolute;
   width: 240px;
   height: 340px;
@@ -10,12 +10,18 @@
   top: 90px;
   right: 40px;
   z-index: 5;
-  .cart-items{
+
+  .cart-items {
     height: 240px;
     display: flex;
     flex-direction: column;
     overflow: scroll;
   }
+  .empty-message{
+    font-size: 1.8rem;
+    margin: 8rem auto;
+  }
+
   button {
     margin-top: auto;
   }

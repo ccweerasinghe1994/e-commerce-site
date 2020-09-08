@@ -10,6 +10,7 @@ import {setCurrentUser} from "./Redux/User/user.action";
 import {Redirect} from 'react-router-dom'
 import {selectCurrentUser} from './Redux/User/user.selectors';
 import {createStructuredSelector} from 'reselect'
+import CheckoutPage from "./pages/checkout/checkout.component";
 class App extends Component {
 
 
@@ -45,6 +46,7 @@ class App extends Component {
                 <Switch>
                     <Route path='/' exact component={HomePage}/>
                     <Route path='/shop' component={ShopPage}/>
+                    <Route exact path='/checkout' component={CheckoutPage}/>
                     <Route exact path='/signin' render={() => {
                         return this.props.currentUser ? <Redirect to='/'/> : <SignInAndSignUp/>
                     }}/>
