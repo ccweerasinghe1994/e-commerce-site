@@ -5,6 +5,9 @@
   width: 22%;
   min-width: 250px;
   align-items: center;
+  position: relative;
+
+
 
   .image {
     width: 100%;
@@ -12,6 +15,14 @@
     background-position: center;
     background-size: cover;
     margin-bottom: .5rem;
+  }
+
+  .custom-button {
+    width: 70%;
+    opacity: 0.7;
+    position: absolute;
+    top: 65%;
+    display: none;
   }
 
   .collection-footer {
@@ -30,6 +41,16 @@
 
     .price {
       width: 10%;
+    }
+  }
+
+  &:hover{
+    .image{
+      opacity: 0.7;
+    }
+    .custom-button{
+      display: flex;
+      opacity: 0.86;
     }
   }
 }
