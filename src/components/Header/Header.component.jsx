@@ -6,8 +6,11 @@ import {auth} from "../../firebase/FireBase.util";
 import {connect} from "react-redux";
 import CartIcon from "../cart-icon/CartIcon.component";
 import CartDropdown from "../cart-dropdown/CartDropdown.compoent";
+import {selectCurrentUser} from '../../Redux/User/user.selectors.js';
+import {selectCartHidden} from '../../Redux/cart/cart.selectors';
+import {createStructuredSelector} from 'reselect'
 
-const Header = ({currentUser,hidden}) => (
+const Header = ({currentUser, hidden}) => (
     <div className='header'>
         <Link to='/' className='logo-container'>
             <Logo className='logo'/>
@@ -22,15 +25,15 @@ const Header = ({currentUser,hidden}) => (
 
             }
             <CartIcon/>
-            {!hidden ? <CartDropdown/>:null}
+            {!hidden ? <CartDropdown/> : null}
         </div>
 
     </div>
 )
 
-const mapStateToProps = ({user:{currentUser},cart: {hidden}}) => ({
-    currentUser,
-    hidden
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    hidden:selectCartHidden
 })
 
 
