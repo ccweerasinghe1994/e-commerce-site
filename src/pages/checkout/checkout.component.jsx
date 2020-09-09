@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {selectCartItems} from "../../Redux/cart/cart.selectors";
 import {selectCarItemTotal} from '../../Redux/cart/cart.selectors'
 import CheckoutItem from "../../components/checkout-item/checkoutItem.component";
+import StripeButton from "../../components/stripe-button/StripeButton.component";
 
 const CheckoutPage = ({cartItems, total}) => {
     return (
@@ -28,6 +29,12 @@ const CheckoutPage = ({cartItems, total}) => {
             </div>
             {cartItems.map(cartItem => <CheckoutItem key={cartItem.id} item={cartItem}/>)}
             <div className='total'>TOTAL:${total}</div>
+            <div className="test-warning">
+                please use the following card number for testing
+                <br/>
+                4242 4242 4242 4242 EXP-any future date CVC-any three digit number
+            </div>
+            <StripeButton price={total}/>
         </div>
     )
 }
