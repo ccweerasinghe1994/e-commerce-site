@@ -1,11 +1,8 @@
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import {Link} from 'react-router-dom'
 import {ReactComponent as Logo} from '../../assets/diamond.svg';
 
-const optionContainerStyles = css`
- padding:10px 15px;
- cursor:pointer
-`
+
 export const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
@@ -41,9 +38,8 @@ export const OptionContainer = styled.div`
 
 `
 
-export const OptionContainerDiv = styled.div`
-${optionContainerStyles}
-`;
+
 export const OptionContainerLink = styled(Link)`
-${optionContainerStyles}
+ padding:10px 15px;
+ cursor:pointer
 `;
