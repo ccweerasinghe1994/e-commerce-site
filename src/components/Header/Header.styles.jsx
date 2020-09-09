@@ -1,6 +1,6 @@
 import styled, {css} from 'styled-components';
 import {Link} from 'react-router-dom'
-
+import {ReactComponent as Logo} from '../../assets/diamond.svg';
 
 const optionContainerStyles = css`
  padding:10px 15px;
@@ -16,25 +16,21 @@ export const HeaderContainer = styled.div`
 `
 
 export const LogoContainer = styled(Link)`
- 
  height: 100%;
  width: 170px;
  padding: 1rem;
  position: relative;
+`
+export const LogoIcon = styled(Logo)`
+ height: 100%;
+ width: 50%;
+`
 
- .logo {
-      height: 100%;
-      width: 50%;
-    }
-    .heading{
+export const HeadingContainer = styled.span`
     width: 50%;
     position:absolute ;
     line-height: 2.5rem;
-   
-    }
-
 `
-
 export const OptionContainer = styled.div`
 
     width: 50%;
