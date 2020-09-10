@@ -15,6 +15,7 @@ class SignIn extends Component {
     }
 
     handleSubmit = async (event) => {
+        console.log(event.target)
         event.preventDefault();
 
         const {email, password} = this.state;
@@ -42,7 +43,7 @@ class SignIn extends Component {
             <div className='sign-in'>
                 <h2 className='title'>i all ready have an account</h2>
                 <span>i already have an account</span>
-                <form onSubmit={this.handleSubmit}>
+                <form>
                     <Input label='Email' handleChange={this.handleChange} type="email" value={this.state.email} required
                            name='email'/>
 
@@ -51,7 +52,7 @@ class SignIn extends Component {
 
 
                     <div className="buttons">
-                        <CustomButton type="submit">Submit Form</CustomButton>
+                        <CustomButton onClick={this.handleSubmit}>Submit Form</CustomButton>
                         <CustomButton isGoogleSignIn onClick={signInWithGoogle}>Sign In with Google</CustomButton>
                     </div>
                 </form>
