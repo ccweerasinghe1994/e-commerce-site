@@ -43,7 +43,7 @@ const buttonStyles = css`
   }
 `
 
-export const CustomButtonContainer = styled.div`
+export const CustomButtonContainer = styled.button`
   min-width: 16.5rem;
   width: auto;
   min-height: 5rem;

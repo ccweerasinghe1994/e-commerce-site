@@ -1,25 +1,32 @@
 import React from "react";
-import './checkoutItem.styles.scss'
-import {connect} from 'react-redux'
+
+import {connect} from 'react-redux';
 import {removeItemFromCart, addItem, removeItem} from "../../Redux/cart/cart.action";
+import {
+    CheckOutItemArrowContainer,
+    CheckOutItemContainer,
+    CheckOutItemImageContainer,
+    CheckOutItemNameContainer, CheckOutItemPriceContainer,
+    CheckOutItemQuantityContainer, CheckOutItemRemoveButtonContainer, CheckOutItemValueContainer
+} from "./CheckOutItem.styles";
 
 const CheckoutItem = ({item, removeCartItem, removeItem, addItem}) => {
     const {imageUrl, name, price, quantity} = item
     return (
-        <div className="checkout-item">
-            <div className="image-container">
+        <CheckOutItemContainer className="checkout-item">
+            <CheckOutItemImageContainer className="image-container">
                 <img src={imageUrl} alt=""/>
-            </div>
-            <div className="name">{name}</div>
-            <div className="quantity">
+            </CheckOutItemImageContainer>
+            <CheckOutItemNameContainer className="name">{name}</CheckOutItemNameContainer>
+            <CheckOutItemQuantityContainer className="quantity">
 
-                <div onClick={() => removeItem(item)} className='arrow'>&#10094;</div>
-                <div className="value">{quantity}</div>
-                <div onClick={() => addItem(item)} className='arrow'>&#10095;</div>
-            </div>
-            <div className="price">${price}</div>
-            <div className='remove-button' onClick={() => removeCartItem(item)}>&#9932;</div>
-        </div>
+                <CheckOutItemArrowContainer onClick={() => removeItem(item)} className='arrow'>&#10094;</CheckOutItemArrowContainer>
+                <CheckOutItemValueContainer className="value">{quantity}</CheckOutItemValueContainer>
+                <CheckOutItemArrowContainer onClick={() => addItem(item)} className='arrow'>&#10095;</CheckOutItemArrowContainer>
+            </CheckOutItemQuantityContainer>
+            <CheckOutItemPriceContainer className="price">${price}</CheckOutItemPriceContainer>
+            <CheckOutItemRemoveButtonContainer className='remove-button' onClick={() => removeCartItem(item)}>&#9932;</CheckOutItemRemoveButtonContainer>
+        </CheckOutItemContainer>
     )
 }
 const mapDispatchToProps = dispatch => ({
