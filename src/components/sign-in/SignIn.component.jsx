@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import './SignIn.styles.scss';
 import Input from "../form-input/FormInput.component";
 import CustomButton from "../custom-button/CustomButton.component";
 import {signInWithGoogle, auth} from "../../firebase/FireBase.util";
+import {ButtonsContainer, SignInContainer, SignInTitleContainer} from "./SignIn.styles";
 
 class SignIn extends Component {
 
@@ -15,6 +15,7 @@ class SignIn extends Component {
     }
 
     handleSubmit = async (event) => {
+        console.log(event.target)
         event.preventDefault();
 
         const {email, password} = this.state;
@@ -39,10 +40,10 @@ class SignIn extends Component {
 
     render() {
         return (
-            <div className='sign-in'>
-                <h2 className='title'>i all ready have an account</h2>
+            <SignInContainer >
+                <SignInTitleContainer >i all ready have an account</SignInTitleContainer>
                 <span>i already have an account</span>
-                <form onSubmit={this.handleSubmit}>
+                <form>
                     <Input label='Email' handleChange={this.handleChange} type="email" value={this.state.email} required
                            name='email'/>
 
@@ -50,12 +51,12 @@ class SignIn extends Component {
                            required name='password'/>
 
 
-                    <div className="buttons">
-                        <CustomButton type="submit">Submit Form</CustomButton>
+                    <ButtonsContainer >
+                        <CustomButton onClick={this.handleSubmit}>Submit Form</CustomButton>
                         <CustomButton isGoogleSignIn onClick={signInWithGoogle}>Sign In with Google</CustomButton>
-                    </div>
+                    </ButtonsContainer>
                 </form>
-            </div>
+            </SignInContainer>
         )
     }
 }
