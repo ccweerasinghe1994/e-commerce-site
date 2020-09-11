@@ -17,7 +17,12 @@ const firebaseConfig = {
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;
-    const userRef = firestore.doc(`users/${userAuth.uid}`)
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+    const collectionRef = firestore.collection('users');
+    const collectionSnapShot = await collectionRef.get();
+    console.log("collectionSnapShot",collectionSnapShot)
+
     const snapShot = await userRef.get();
 
     if (!snapShot.exists){
