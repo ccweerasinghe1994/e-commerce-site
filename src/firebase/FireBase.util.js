@@ -18,15 +18,10 @@ const firebaseConfig = {
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;
     const userRef = firestore.doc(`users/${userAuth.uid}`);
-
-    const collectionRef = firestore.collection('users');
-    const collectionSnapShot = await collectionRef.get();
-    console.log("collectionSnapShot",collectionSnapShot)
-
     const snapShot = await userRef.get();
 
-    if (!snapShot.exists){
-        const {displayName,email} = userAuth;
+    if (!snapShot.exists) {
+        const {displayName, email} = userAuth;
         const createdAt = new Date();
 
         try {
@@ -36,14 +31,15 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
                 createdAt,
                 ...additionalData
             })
-        }catch (error){
-            console.error('Error Creating A User',error.message)
+        } catch (error) {
+            console.error('Error Creating A User', error.message)
         }
     }
 
     return userRef;
 
 }
+
 
 // // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -59,4 +55,34 @@ provider.setCustomParameters({
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
+export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
+
+    const collectionRef = firestore.collection(collectionKey);
+    console.log("collectionRef", collectionRef)
+    const batch = firestore.batch();
+
+    objectToAdd.forEach(obj => {
+        const newDocRef = collectionRef.doc()
+        batch.set(newDocRef, obj);
+
+    })
+    return await batch.commit();
+}
+export const convertCollectionSnapShotToMap = collections => {
+    const transFormedCollection = collections.docs.map(doc => {
+        const {title, items} = doc.data();
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: doc.id,
+            title,
+            items
+        }
+    })
+
+    return transFormedCollection.reduce((accumulator, collection) => {
+        accumulator[collection.title.toLowerCase()] = collection;
+        return accumulator;
+    }, {})
+
+}
 export default firebase;
