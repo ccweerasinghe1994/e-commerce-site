@@ -3,6 +3,8 @@ import Input from "../form-input/FormInput.component";
 import CustomButton from "../custom-button/CustomButton.component";
 import {auth, createUserProfileDocument} from "../../firebase/FireBase.util";
 import {SignUpContainer, SignUpTitleContainer} from "./SignIn.styles";
+import {signUpStart} from "../../Redux/User/user.action";
+import {connect} from 'react-redux'
 
 class SignUp extends Component {
 
@@ -23,22 +25,14 @@ class SignUp extends Component {
             alert("Passwords doesn't match")
             return;
         }
-
-        try {
-            const {user} = await auth.createUserWithEmailAndPassword(email, password);
-
-            await createUserProfileDocument(user, {displayName});
-
-            this.setState({
-                displayName: "",
-                password: "",
-                email: "",
-                confirmPassword: ""
-            })
-
-        } catch (error) {
-            console.log(error)
-        }
+        const {signUpUser} = this.props;
+        await signUpUser(email,password,displayName);
+        this.setState({
+            displayName: "",
+            password: "",
+            email: "",
+            confirmPassword: ""
+        })
 
 
     }
@@ -54,15 +48,16 @@ class SignUp extends Component {
     render() {
         const {displayName, password, email, confirmPassword} = this.state
         return (
-            <SignUpContainer >
-                <SignUpTitleContainer >I DO Not Have an account</SignUpTitleContainer>
+            <SignUpContainer>
+                <SignUpTitleContainer>I DO Not Have an account</SignUpTitleContainer>
                 <span>Sign Up with your email and password</span>
                 <form className='sign-up-form' onSubmit={this.handleSubmit}>
                     <Input handleChange={this.handleChange} label='Display Name' requried='true' type='text'
                            name={'displayName'} value={displayName}/>
                     <Input handleChange={this.handleChange} label='Email' requried='true' type='email' name={'email'}
                            value={email}/>
-                    <Input handleChange={this.handleChange} label='Password ' requried='true' type='password' name={'password'}
+                    <Input handleChange={this.handleChange} label='Password ' requried='true' type='password'
+                           name={'password'}
                            value={password}/>
                     <Input handleChange={this.handleChange} label='Confirm Password' requried='true' type='password'
                            name={'confirmPassword'} value={confirmPassword}/>
@@ -74,4 +69,7 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp
+const mapDispatchToProps = dispatch => ({
+    signUpUser: (email, password, displayName) => dispatch(signUpStart({email, password, displayName}))
+})
+export default connect(null, mapDispatchToProps)(SignUp);

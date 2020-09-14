@@ -22,15 +22,15 @@ export const checkUserSession = () => ({
     type: userTypes.CHECK_USER_SESSION
 })
 
-export const signOutStart = ()=>({
-    type:userTypes.SIGN_OUT_USER_START
+export const signOutStart = () => ({
+    type: userTypes.SIGN_OUT_USER_START
 })
-export const signOutSuccess = ()=>({
-    type:userTypes.SIGN_OUT_USER_SUCCESS
+export const signOutSuccess = () => ({
+    type: userTypes.SIGN_OUT_USER_SUCCESS
 })
-export const signOutFailure = (error)=>({
-    type:userTypes.SIGN_OUT_USER_FAILURE,
-    payload:error
+export const signOutFailure = (error) => ({
+    type: userTypes.SIGN_OUT_USER_FAILURE,
+    payload: error
 })
 
 export const emailPasswordGoogleSignInStart = (emailPassword) => ({
@@ -38,4 +38,17 @@ export const emailPasswordGoogleSignInStart = (emailPassword) => ({
     payload: emailPassword
 })
 
+export const signUpStart = (userData) => ({
 
+    type: userTypes.SING_UP_START,
+    payload: userData
+})
+
+export const signUpSuccess = ({user,additionalData}) => ({
+    type: userTypes.SING_UP_SUCCESS,
+    payload: {user,additionalData}
+})
+export const signUpInError = error => ({
+    type: userTypes.SING_UP_FAILURE,
+    payload: error
+})

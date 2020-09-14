@@ -4,12 +4,12 @@ import UserTypes from "./User.types";
 import {
 
     SignInError,
-    SignInSuccess, signOutFailure, signOutSuccess
+    SignInSuccess, signOutFailure, signOutSuccess, signUpInError, signUpSuccess
 } from "./user.action";
 
-function* getSnapShot(user) {
+function* getSnapShot(user,additionalData) {
     try {
-        const userRef = yield call(createUserProfileDocument, user);
+        const userRef = yield call(createUserProfileDocument, user,additionalData);
         const snapShot = yield userRef.get();
         yield put(SignInSuccess({id: snapShot.id, ...snapShot.data()}))
 
@@ -79,6 +79,34 @@ function* onSignOut() {
     yield takeLatest(UserTypes.SIGN_OUT_USER_START, signOut)
 }
 
+function* signUpUser({payload: {displayName, email, password}}) {
+    try {
+        console.log(displayName, email, password)
+        const {user} = yield auth.createUserWithEmailAndPassword(email, password);
+
+        yield put(signUpSuccess({
+            user,
+            additionalData: {
+                displayName
+            }
+        }))
+    } catch (error) {
+        yield put(signUpInError(error))
+    }
+
+}
+
+function* onSignUpStart() {
+    yield takeLatest(UserTypes.SING_UP_START, signUpUser)
+}
+
+function* signInAfterSignUp({payload: {user, additionalData}}){
+    yield getSnapShot(user,additionalData)
+}
+
+function* onSignUpSuccess() {
+    yield takeLatest(UserTypes.SING_UP_SUCCESS,signInAfterSignUp)
+}
 
 export function* userSaga() {
     yield all([
@@ -86,6 +114,8 @@ export function* userSaga() {
         call(onSignInWithEmailAndPassword),
         call(onCheckUserSession),
         call(onSignOut),
+        call(onSignUpStart),
+        call(onSignUpSuccess),
 
     ])
 }
