@@ -17,12 +17,21 @@ class SignIn extends Component {
     }
 
     handleSubmit = async (event) => {
-        console.log(event.target)
         event.preventDefault();
-
         const {email, password} = this.state;
         const {signInWithEmailPassword} = this.props;
-        signInWithEmailPassword(email, password);
+        signInWithEmailPassword(email, password)
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password)
+            this.setState({
+                password: "",
+                email: ""
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
 
     }
     handleChange = (event) => {
