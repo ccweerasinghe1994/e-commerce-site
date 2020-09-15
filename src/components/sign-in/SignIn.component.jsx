@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, { useState} from "react";
 import Input from "../form-input/FormInput.component";
 import CustomButton from "../custom-button/CustomButton.component";
 import {auth} from "../../firebase/FireBase.util";
