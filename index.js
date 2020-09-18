@@ -2,8 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-
-if (process.env.NODE_ENV !== 'production') require('dotenv');
+require('dotenv').config();
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -22,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(port, error => {
+app.listen(port, (error) => {
   if (error) throw error;
   console.log('Server Running @ PORT:' + port);
 });
@@ -34,9 +33,9 @@ app.post('/payment', (req, res) => {
     currency: 'usd',
   };
 
-  stripe.charges.create(body, (stripeError, stripeRes) => {
-    if (stripeError) {
-      res.status(500).send({ error: stripeError });
+  stripe.charges.create(body, (stripeErr, stripeRes) => {
+    if (stripeErr) {
+      res.status(500).send({ error: stripeErr });
     } else {
       res.status(200).send({ success: stripeRes });
     }
